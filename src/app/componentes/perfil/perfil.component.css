@@ -1,0 +1,92 @@
+.profile-container {
+  max-width: auto;
+
+  padding: 20px;
+}
+
+p{
+  font-family: century 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: justify;
+}
+
+.profile-header {
+  background: #133e8f; /* Cambia el color de fondo a tu elección */
+  color: #fff; /* Cambia el color de texto a tu elección */
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.profile-header-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile-header-text {
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  border-radius: 10px;
+}
+
+.profile-header h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+
+
+.course-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.course-card {
+  background-color: #f1f1f1;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 30);
+  transition: transform 0.3s ease;
+}
+
+.course-card:hover {
+	transform: translateY(-5px);
+}
+
+.course-card img {
+  width: 100%;
+  height: auto;
+}
+
+.course-details {
+  padding: 20px;
+}
+
+.course-details h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.course-details p {
+  margin-bottom: 20px;
+}
+
+button {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 10px 0;
+  margin: 10px 0;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.5s ease;
+  background-color: #1c7097;
+  color: #fff;
+}
+
+button:hover{
+  background-color: #079f04;
+}

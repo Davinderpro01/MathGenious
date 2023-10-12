@@ -1,0 +1,98 @@
+
+body {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  margin: 0;
+}
+
+main {
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.login-box {
+  width: 450px;
+  margin: 150px auto;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.login-box h2 {
+  margin: 0 0 30px;
+  padding: 0;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.user-box {
+  position: relative;
+  margin: 0 0 20px;
+}
+
+.user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 1rem;
+  color: #333;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.user-box input {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 2px solid #999;
+  outline: none;
+  font-size: 1rem;
+  color: #333;
+  transition: 0.3s ease;
+}
+
+.user-box input:focus ~ label, .user-box input:valid ~ label {
+  top: -20px;
+  font-size: 0.8rem;
+  color: #0099ff;
+}
+
+button[type="submit"] {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 10px 0;
+  margin: 20px 0;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.5s ease;
+  background-color: #0099ff;
+  color: #fff;
+}
+
+button[type="submit"]:hover {
+  background-color: #079f04;
+}
+
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+}

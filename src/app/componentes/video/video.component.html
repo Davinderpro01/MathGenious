@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="video-platform">
+    <div class="video-list">
+      <div class="video-item" *ngFor="let video of videos">
+        <div class="video-card">
+          <h2 class="video-title">{{ video.title }}</h2>
+          <p class="video-description">{{ video.description }}</p>
+          <div class="video-wrapper">
+            <span class="spinner-border"></span>
+            <iframe [src]="getSafeUrl(video.url)" title = "Videos" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

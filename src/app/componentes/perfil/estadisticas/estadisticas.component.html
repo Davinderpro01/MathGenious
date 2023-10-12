@@ -1,0 +1,97 @@
+<div class="card">
+  <div class="card-image">
+    <img src="assets/Imagenes/estadisticas.jpg" alt="Imagen de próximamente">
+  </div>
+</div>
+  <div class="card">
+    <div class="card-content" *ngIf="estadisticas">
+      <h3>Historial de Sesiones</h3>
+      <input type="text" [(ngModel)]="searchTerm" (input)="filterSessions()" placeholder="Aquí puedes buscar tus sesiones, por ejemplo: Sep 29, 2023">
+      <ul *ngIf="estadisticas.sessionHistory">
+        <li *ngFor="let session of filteredSessions">
+          <p>Fecha: {{ session.date | date }}</p>
+          <p>Total de preguntas respondidas: {{ session.totalQuestions }}</p>
+          <p>Respuestas correctas: {{ session.correctAnswers }}</p>
+          <p>Respuestas incorrectas: {{ session.incorrectAnswers }}</p>
+          <p>Tiempo de práctica: {{ session.timePractice }} </p>
+          <p>Promedio de puntaje: {{ session.averageScore.toFixed(2) }}%</p>
+          <div class="progress">
+            <div class="progress-bar" [style.width]="(session.correctAnswers / session.totalQuestions) * 100 + '%'">
+              {{ (session.correctAnswers / session.totalQuestions * 100).toFixed(2) }}%
+            </div>
+            <div class="progress-red" [style.width]="(100 - session.correctAnswers / session.totalQuestions * 100) + '%'">
+              {{ (100 - session.correctAnswers / session.totalQuestions * 100).toFixed(2) }}%
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content" *ngIf="estadisticas">
+      <h3>Progreso por Tema</h3>
+      <ul *ngIf="estadisticas.themeProgress">
+      <li *ngFor="let theme of estadisticas.themeProgress">
+        <p>Tema: {{ theme.theme }}</p>
+        <p>Respuestas correctas: {{ theme.correctAnswers }}</p>
+        <p>Respuestas incorrectas: {{ theme.incorrectAnswers }}</p>
+        <div class="progress">
+          <div class="progress-bar" [style.width]="(theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100 + '%'">
+            {{ ((theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100).toFixed(2) }}%
+          </div>
+          <div class="progress-red" [style.width]="(100 - (theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100) + '%'">
+            {{ (100 - (theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100).toFixed(2) }}%
+          </div>
+        </div>
+      </li>
+    </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content" *ngIf="estadisticas">
+      <h3>Mejora en promedio de puntajes</h3>
+      <ul>
+        <li>
+        <p>Promedio de puntaje a lo largo del tiempo: {{ calculateAverageScoreOverTime().toFixed(2) }}%</p>
+        </li>
+      </ul>
+      <div class="progress">
+        <div class="progress-bar" [style.width]="(calculateAverageScoreOverTime() / 100) * 100 + '%'">
+          {{ calculateAverageScoreOverTime().toFixed(2) }}%
+        </div>
+        <div class="progress-red" [style.width]="(100 - calculateAverageScoreOverTime()) + '%'">
+          {{ (100 - calculateAverageScoreOverTime()).toFixed(2) }}%
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content" *ngIf="estadisticas">
+      <h3>Tendencias de Temas</h3>
+      <ul>
+        <li *ngFor="let theme of calculateThemePerformance()">
+          <p>Tema: {{ theme.theme }}</p>
+          <p>Porcentaje de respuestas correctas: {{ theme.percentage.toFixed(2) }}%</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content" *ngIf="estadisticas">
+      <h3>Comparación de Sesiones</h3>
+      <ul *ngIf="showScoreIncreaseResults">
+        <li *ngFor="let result of scoreIncreaseResults">
+          <p>Desde la sesión del {{ result.firstSession.date | date }} hasta la sesión del {{ result.lastSession.date | date }}:</p>
+          <p>Aumento del promedio: {{ result.percentageIncrease.toFixed(2) }}%</p>
+        </li>
+      </ul>
+      <p *ngIf="!showScoreIncreaseResults">No hay sesiones con un aumento del 10% o más en el promedio.</p>
+    </div>
+  </div>
+
+
+

@@ -1,0 +1,46 @@
+.container-fluid{
+  background-color: rgb(210, 221, 252);
+  border-radius: 10px;
+}
+
+button{
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 10px 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.5s ease;
+  background-color: #0b4973;
+  color: #fff;
+}
+
+button.cerrar-sesion{
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 10px 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.5s ease;
+  background-color: #ac1a3e;
+  color: #fff;
+}
+
+button.cerrar-sesion:hover{
+  background-color: #d119b3;
+}
+
+button:hover{
+  background-color: #079f04;
+}
+
+

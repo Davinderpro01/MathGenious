@@ -1,0 +1,53 @@
+<div class="container" padding="5">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <img src="assets/Imagenes/logo_sinfondo.png" width="300" alt="50" routerLink="/principal">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarColor01">
+        <ul class="navbar-nav ml-auto">
+
+          <li class="nav-item" *ngIf="perfilData && isAdmin">
+            <button type="button" class="btn btn-primary" routerLink="/admin/modulos">Modulos</button>
+          </li>
+
+          <li class="nav-item" *ngIf="perfilData && isAdmin">
+            <button type="button" class="btn btn-primary" routerLink="/admin/submodulos">Temas</button>
+          </li>
+
+          <li class="nav-item" *ngIf="perfilData && isAdmin">
+            <button type="button" class="btn btn-primary" routerLink="/admin/videos">Videos</button>
+          </li>
+
+          <li class="nav-item" *ngIf="perfilData">
+            <button type="button" class="btn btn-primary" routerLink="/perfil">Cursos</button>
+          </li>
+
+          <!-- Botón de Pruebas (visible solo para usuarios no administradores) -->
+          <li class="nav-item" *ngIf="perfilData && !isAdmin">
+            <button type="button" class="btn btn-primary" routerLink="/perfil/pruebas">Pruebas</button>
+          </li>
+
+          <!-- Botón de Estadísticas (visible solo para usuarios no administradores) -->
+          <li class="nav-item" *ngIf="perfilData && !isAdmin">
+            <button type="button" class="btn btn-primary" routerLink="/perfil/estadisticas">Estadísticas</button>
+          </li>
+
+          <!-- Botón de Cerrar sesión (visible para todos los usuarios autenticados) -->
+          <li class="nav-item" *ngIf="perfilData">
+            <button type="button" class="cerrar-sesion" (click)="cerrarSesion()">Cerrar sesión</button>
+          </li>
+          <li class="nav-item" *ngIf="!perfilData">
+            <button type="button" class="btn btn-primary" routerLink="/registro">Registrarse</button>
+          </li>
+          <li class="nav-item" *ngIf="!perfilData">
+            <button type="button" class="btn btn-primary" routerLink="/ingreso">Iniciar Sesión</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,73 @@
+<div class="card">
+  <div class="card-image">
+    <img src="assets/Imagenes/prueba.jpg" alt="Imagen de próximamente">
+  </div>
+  <div class="card-content">
+    <h2>Instrucciones</h2>
+    <p> - Primero, debes seleccionar un tema que desees practicar.</p>
+    <p> - Segundo, debes seleccionar la dificultad para el cuestionario.</p>
+    <p> - Tercero, al precionar el botón "Comenzar" el cuestionario dará inicio a las preguntas y el conteo de tiempo.</p>
+    <p> - Cuarto, al finalizar el cuestionario podrás visualizar tus resultados y tiempo total.</p>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<div class="quiz-container">
+  <ng-container *ngIf="showIntro" class="container">
+    <h1 class="quiz-title">Bienvenido al Cuestionario</h1>
+    <label for="themeSelect">Selecciona un Tema:</label>
+    <select id="themeSelect" [(ngModel)]="selectedTheme">
+      <option *ngFor="let theme of availableThemes" [value]="theme.value">{{ theme.label }}</option>
+    </select>
+    <label for="difficultySelect">Dificultad:</label>
+  <select id="difficultySelect" [(ngModel)]="selectedDifficulty">
+    <option *ngFor="let difficulty of difficultyOptions" [value]="difficulty.value">{{ difficulty.label }}</option>
+  </select>
+    <button (click)="startQuiz()" class="boton-comenzar">Comenzar</button>
+    <br>
+    <br>
+    <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  </ng-container>
+
+  <ng-container *ngIf="!showIntro">
+    <div class="quiz-score">
+      <span id="correct-score">{{ correctAnswers }}</span> / <span id="total-question">{{ totalQuestions }}</span>
+    </div>
+    <div class="quiz-body">
+      <h2 class="quiz-question">{{ currentQuestion.questionText }}</h2>
+      <div class="quiz-options">
+        <ul *ngFor="let option of currentQuestion.options; let optionIndex = index"
+            (click)="onOptionClick(optionIndex)"
+            [ngClass]="{'selected': optionIndex === currentQuestion.userAnswer}">
+          {{ optionIndex + 1 }}. <span>{{ option }}</span>
+      </ul>
+      </div>
+
+      <div id="result">
+        <p *ngIf="showResult">{{ resultMessage }}</p>
+      </div>
+    </div>
+    <div class="quiz-foot">
+      <button (click)="checkAnswer()" [disabled]="checkButtonDisabled || answerChecked" *ngIf="!quizFinished && !answered">Comprobar Respuesta</button>
+
+      <button type="button" (click)="loadNextQuestion()" *ngIf="showNextQuestionButton && !quizFinished">Siguiente Pregunta</button>
+      <div *ngIf="!quizFinished" class="time-elapsed">
+        Tiempo transcurrido: {{ timeElapsed }}
+      </div>
+      <button (click)="cancelQuiz()" class="boton-cancelar">Cancelar</button>
+    </div>
+    <div *ngIf="quizFinished" class="quiz-results">
+      <h3>Resultados:</h3>
+      <p>Respuestas Correctas: {{ correctAnswers }}</p>
+      <p>Respuestas Incorrectas: {{ totalQuestions - correctAnswers }}</p>
+      <p>Tiempo Transcurrido: {{ timeElapsed }} segundos.</p>
+    </div>
+  </ng-container>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>

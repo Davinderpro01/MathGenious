@@ -1,0 +1,9 @@
+<div class="submodule-container">
+  <div class="submodule-cards">
+    <div class="submodule-card" *ngFor="let submodule of submodules">
+      <h4>{{ submodule.nombre }}</h4>
+      <p>{{ submodule.descripcion }}</p>
+      <button [routerLink]="['/submodule', submodule._id, 'videos']">Ver Videos</button>
+    </div>
+  </div>
+</div>

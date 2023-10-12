@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const environment = {\n  production: true,\n  backendUrl: 'https://backendmathgeniousgt-eb97931828c5.herokuapp.com/'\n};","map":null,"metadata":{},"sourceType":"module"}

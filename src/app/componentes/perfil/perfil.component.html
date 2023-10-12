@@ -1,0 +1,21 @@
+<div class="profile-container">
+  <div class="profile-header" *ngIf="perfilData">
+    <div class="profile-header-content">
+        <div class="profile-header-text">
+            <h1>Bienvenid@, {{ perfilData.nombre }}</h1>
+        </div>
+    </div>
+</div>
+
+  <br>
+  <div class="course-cards">
+    <div class="course-card" *ngFor="let module of modules">
+      <img [src]="module.imagen" [alt]="module.nombre">
+      <div class="course-details">
+        <h2>{{ module.nombre }}</h2>
+        <p>{{ module.descripcion }}</p>
+        <button [routerLink]="['/perfil', module._id, 'submodules']">Ir al curso</button>
+      </div>
+    </div>
+  </div>
+</div>

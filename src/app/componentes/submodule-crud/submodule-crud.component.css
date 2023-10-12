@@ -1,0 +1,214 @@
+/* Estilo para el contenedor principal */
+.submodule-crud-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+/* Estilo para el formulario */
+.submodule-form {
+  flex: 1;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.submodule-form h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 1rem;
+}
+
+/* Estilo para el botón de crear/actualizar */
+.boton {
+  background-color: #007bff;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  text-transform: uppercase; /* Convertir el texto a mayúsculas */
+  transition: background-color 0.3s ease;
+}
+
+.boton:disabled {
+  background-color: #ccc; /* Cambia el color de fondo cuando está desactivado */
+  cursor: not-allowed; /* Cambia el cursor a "no permitido" cuando está desactivado */
+}
+
+.boton:hover:not([disabled]) {
+  background-color: #0056b3; /* Cambia el color de fondo en hover si no está desactivado */
+  transform: translateY(-2px); /* Efecto de elevación en hover */
+}
+
+/* Estilo para la lista de submódulos */
+.module-list {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.module-list h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.module-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.module-list li {
+  display: flex; /* Utilizamos flexbox para alinear elementos */
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.module-list .buttons-container {
+  display: flex;
+  gap: 10px;
+}
+
+.module-list button {
+  background-color: #2a9bb7;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.module-list button:hover {
+  background-color: #280aac;
+}
+
+/* Estilo para el campo de búsqueda */
+.module-list input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* Estilo para el campo de búsqueda en foco */
+.module-list input[type="text"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.error {
+  border: 2px solid #ff0000; /* Borde rojo en caso de error */
+}
+
+/* Estilo para el mensaje modal de confirmación */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro translúcido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Asegura que esté por encima de otros elementos */
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  width: 50%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  background-color: #1a05a2;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.modal-content button:last-child {
+  background-color: #c31526;
+  margin-top: 10px;
+}
+
+.modal-content button:hover {
+  background-color: #007bff;
+}
+
+.modal-content button:last-child:hover {
+  background-color: #ff0000;
+}
+
+/* Estilos para la lista desplegable personalizada */
+.custom-select {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 16px;
+  appearance: none; /* Oculta la flecha predeterminada del select */
+}
+
+.select-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Estilos para la flecha hacia abajo */
+.select-icon i {
+  font-size: 14px;
+  color: #555;
+}
