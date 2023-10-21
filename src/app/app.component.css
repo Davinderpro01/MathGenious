@@ -3,6 +3,25 @@
   border-radius: 10px;
 }
 
+@media (max-width: 767px) {
+  .navbar-toggler-icon {
+    display: none;
+  }
+  .navbar-collapse {
+    display: flex;
+    flex-direction: column;
+  }
+  .navbar-nav {
+    width: 100%;
+  }
+  .navbar-nav li {
+    display: block;
+  }
+  .navbar-nav li a {
+    width: 100%;
+    text-align: center;
+  }
+}
 button{
   border: none;
   outline: none;

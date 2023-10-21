@@ -82,4 +82,10 @@ export class AppComponent implements OnInit {
     }
     return null;
   }
+  getNombre(): string | null {
+    if (this.perfilData) {
+      return this.perfilData.nombre; // Ajusta esto según la estructura de tu objeto de usuario autenticado
+    }
+    return null;
+  }
 }

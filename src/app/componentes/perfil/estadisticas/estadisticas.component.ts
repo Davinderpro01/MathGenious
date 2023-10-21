@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { EstadisticasService } from 'src/app/services/estadisticas.service';
 import { AppComponent } from 'src/app/app.component';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 
 @Component({
@@ -11,15 +13,18 @@ import { AppComponent } from 'src/app/app.component';
 export class EstadisticasComponent implements OnInit {
   estadisticas: any = {};
   searchTerm: string = '';
-  filteredSessions: any[] = []; // Aquí almacenaremos las sesiones filtradas.
+  filteredSessions: any[] = [];
   allSessions: any[] = [];
   showScoreIncreaseResults: boolean = false;
   scoreIncreaseResults: any[] = [];
+  nombre: string = '';
 
 
   constructor(private estadisticasService: EstadisticasService, private appComponent: AppComponent) {}
 
   ngOnInit(): void {
+
+    this.nombre = this.appComponent.getNombre() ?? 'Nombre predeterminado';
     const userId = this.appComponent.getUserID();
 
     if (userId !== null) {
@@ -122,6 +127,7 @@ export class EstadisticasComponent implements OnInit {
     }
   }
 
+
   convertTime(totalSeconds: number): string {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -130,10 +136,10 @@ export class EstadisticasComponent implements OnInit {
   }
 
   filterSessions() {
-    const searchTermLower = this.searchTerm.toLowerCase(); // Convertir el término a minúsculas para una búsqueda sin distinción entre mayúsculas y minúsculas.
+    const searchTermLower = this.searchTerm.toLowerCase();
 
     if (!searchTermLower) {
-      this.filteredSessions = this.allSessions; // Si el término de búsqueda está vacío, mostrar todas las sesiones.
+      this.filteredSessions = this.allSessions;
       return;
     }
 
@@ -186,13 +192,13 @@ export class EstadisticasComponent implements OnInit {
     const firstSession = this.allSessions[0];
     const lastSession = this.allSessions[this.allSessions.length - 1];
 
-    const firstAverage = firstSession.averageScore;
+    const firstAverage = this.calculateAverageScoreOverTime();
     const lastAverage = lastSession.averageScore;
     console.log(firstAverage, lastAverage);
 
     const percentageIncrease = ((lastAverage - firstAverage) / firstAverage) * 100;
 
-    if (percentageIncrease >= 10) {
+    if (percentageIncrease >= 0) {
       this.scoreIncreaseResults.push({
         firstSession,
         lastSession,
@@ -204,6 +210,54 @@ export class EstadisticasComponent implements OnInit {
     this.showScoreIncreaseResults = this.scoreIncreaseResults.length > 0;
   }
 
+  generatePDF() {
+    const sectionIds = ['progreso-por-tema', 'tendencias-temas', 'mejora-promedio-puntajes'];
 
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'in',
+      format: 'letter'
+    });
+
+    const promises = sectionIds.map(sectionId => {
+      return new Promise<void>(resolve => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          html2canvas(section).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const aspectRatio = canvas.width / canvas.height;
+
+            let imgWidth = pdfWidth;
+            let imgHeight = imgWidth / aspectRatio;
+
+            if (imgHeight > pdfHeight) {
+              imgHeight = pdfHeight;
+              imgWidth = imgHeight * aspectRatio;
+            }
+
+            // Calcula las coordenadas para centrar el contenido
+            const xPos = (pdfWidth - imgWidth) / 2;
+            const yPos = (pdfHeight - imgHeight) / 2;
+
+            if (sectionId !== sectionIds[0]) {
+              pdf.addPage();
+            }
+
+            pdf.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight);
+            resolve();
+          });
+        } else {
+          console.log(`Elemento con ID '${sectionId}' no encontrado.`);
+          resolve();
+        }
+      });
+    });
+
+    Promise.all(promises).then(() => {
+      pdf.save('estadisticas.pdf');
+    });
+  }
 
 }

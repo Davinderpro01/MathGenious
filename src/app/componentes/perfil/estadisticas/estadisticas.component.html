@@ -1,8 +1,11 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <div class="card">
   <div class="card-image">
     <img src="assets/Imagenes/estadisticas.jpg" alt="Imagen de próximamente">
   </div>
 </div>
+<div id="estadisticas-container" class="section">
   <div class="card">
     <div class="card-content" *ngIf="estadisticas">
       <h3>Historial de Sesiones</h3>
@@ -27,34 +30,53 @@
       </ul>
     </div>
   </div>
+</div>
 
+<div id="progreso-por-tema" class="section">
   <div class="card">
     <div class="card-content" *ngIf="estadisticas">
       <h3>Progreso por Tema</h3>
       <ul *ngIf="estadisticas.themeProgress">
-      <li *ngFor="let theme of estadisticas.themeProgress">
-        <p>Tema: {{ theme.theme }}</p>
-        <p>Respuestas correctas: {{ theme.correctAnswers }}</p>
-        <p>Respuestas incorrectas: {{ theme.incorrectAnswers }}</p>
-        <div class="progress">
-          <div class="progress-bar" [style.width]="(theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100 + '%'">
-            {{ ((theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100).toFixed(2) }}%
+        <li *ngFor="let theme of estadisticas.themeProgress">
+          <p>Tema: {{ theme.theme }}</p>
+          <p>Respuestas correctas: {{ theme.correctAnswers }}</p>
+          <p>Respuestas incorrectas: {{ theme.incorrectAnswers }}</p>
+          <div class="progress">
+            <div class="progress-bar" [style.width]="(theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100 + '%'">
+              {{ ((theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100).toFixed(2) }}%
+            </div>
+            <div class="progress-red" [style.width]="(100 - (theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100) + '%'">
+              {{ (100 - (theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100).toFixed(2) }}%
+            </div>
           </div>
-          <div class="progress-red" [style.width]="(100 - (theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100) + '%'">
-            {{ (100 - (theme.correctAnswers / (theme.correctAnswers + theme.incorrectAnswers)) * 100).toFixed(2) }}%
-          </div>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
     </div>
   </div>
+</div>
 
+
+<div id="tendencias-temas" class="section">
   <div class="card">
     <div class="card-content" *ngIf="estadisticas">
-      <h3>Mejora en promedio de puntajes</h3>
+      <h3>Tendencias de Temas</h3>
+      <ul>
+        <li *ngFor="let theme of calculateThemePerformance()">
+          <p>Tema: {{ theme.theme }}</p>
+          <p>Porcentaje de respuestas correctas: {{ theme.percentage.toFixed(2) }}%</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="mejora-promedio-puntajes" class="section">
+  <div class="card" *ngIf="nombre">
+    <div class="card-content" *ngIf="estadisticas">
+      <h3>Mejora en promedio de puntajes de {{ nombre }}</h3>
       <ul>
         <li>
-        <p>Promedio de puntaje a lo largo del tiempo: {{ calculateAverageScoreOverTime().toFixed(2) }}%</p>
+          <p>Promedio de puntaje a lo largo del tiempo: {{ calculateAverageScoreOverTime().toFixed(2) }}%</p>
         </li>
       </ul>
       <div class="progress">
@@ -70,28 +92,20 @@
 
   <div class="card">
     <div class="card-content" *ngIf="estadisticas">
-      <h3>Tendencias de Temas</h3>
-      <ul>
-        <li *ngFor="let theme of calculateThemePerformance()">
-          <p>Tema: {{ theme.theme }}</p>
-          <p>Porcentaje de respuestas correctas: {{ theme.percentage.toFixed(2) }}%</p>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-content" *ngIf="estadisticas">
       <h3>Comparación de Sesiones</h3>
       <ul *ngIf="showScoreIncreaseResults">
         <li *ngFor="let result of scoreIncreaseResults">
           <p>Desde la sesión del {{ result.firstSession.date | date }} hasta la sesión del {{ result.lastSession.date | date }}:</p>
-          <p>Aumento del promedio: {{ result.percentageIncrease.toFixed(2) }}%</p>
+          <p>Haz incrementado un {{ result.percentageIncrease.toFixed(2) }}% en tus resultados</p>
         </li>
       </ul>
-      <p *ngIf="!showScoreIncreaseResults">No hay sesiones con un aumento del 10% o más en el promedio.</p>
+      <p *ngIf="!showScoreIncreaseResults">No se ha obtenido un incremento en tus resultados, ¡Sigue mejorando!</p>
     </div>
   </div>
+</div>
 
+<button (click)="generatePDF()" class="pdf-button">
+  <i class="material-icons">cloud_download</i> Generar PDF
+</button>
 
-
+<br>

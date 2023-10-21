@@ -56,7 +56,9 @@
       <div *ngIf="!quizFinished" class="time-elapsed">
         Tiempo transcurrido: {{ timeElapsed }}
       </div>
-      <button (click)="cancelQuiz()" class="boton-cancelar">Cancelar</button>
+      <button (click)="cancelQuiz()" class="boton-cancelar" *ngIf="!quizFinished">Cancelar</button>
+      <button (click)="viewStatistics()" class="boton-cancelar" *ngIf="quizFinished">Ver Estadísticas</button>
+
     </div>
     <div *ngIf="quizFinished" class="quiz-results">
       <h3>Resultados:</h3>

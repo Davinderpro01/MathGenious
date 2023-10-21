@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PreguntasService } from 'src/app/services/preguntas.service';
 import { EstadisticasService } from 'src/app/services/estadisticas.service';
 import { AppComponent } from 'src/app/app.component';
+import { Router } from '@angular/router';
 
 
 interface Question {
@@ -44,8 +45,8 @@ export class PruebasComponent implements OnInit {
 
   timeElapsed: string = '';
 
-  selectedTheme: string = ''; // Tema seleccionado por el usuario
-  selectedQuestionCount: number = 10; // Cantidad de preguntas seleccionada por el usuario
+  selectedTheme: string = '';
+  selectedQuestionCount: number = 10;
   availableThemes: Theme[] = [
     { value: 'enteros', label: 'Números Enteros' },
     { value: 'fracciones', label: 'Fracciones' },
@@ -64,7 +65,7 @@ export class PruebasComponent implements OnInit {
     { value: 'Integracion', label: 'Integracion' },
   ];
 
-  selectedDifficulty: string = 'regular'; // Dificultad seleccionada por el usuario (valor por defecto: regular)
+  selectedDifficulty: string = 'regular';
   difficultyOptions: { value: string; label: string }[] = [
     { value: 'facil', label: 'Fácil' },
     { value: 'regular', label: 'Regular' },
@@ -77,18 +78,18 @@ export class PruebasComponent implements OnInit {
   completedSessions: any[] = [];
 
 
-  constructor(private preguntasService: PreguntasService, private estadisticasService: EstadisticasService, private appComponent: AppComponent) {}
+  constructor(private preguntasService: PreguntasService, private estadisticasService: EstadisticasService, private appComponent: AppComponent, private router: Router) {}
 
   ngOnInit(): void {
     // Iniciar intervalo para actualizar el tiempo transcurrido
     setInterval(() => {
       this.updateTimeElapsed();
-    }, 1000); // Actualizar cada segundo
+    }, 1000);
   }
 
   startQuiz() {
     if (this.selectedTheme && this.selectedDifficulty) {
-      this.errorMessage = ''; // Limpiar el mensaje de error si todo es válido
+      this.errorMessage = '';
       this.showIntro = false;
       this.loadQuestions();
     } else {
@@ -98,7 +99,7 @@ export class PruebasComponent implements OnInit {
 
   updateTimeElapsed() {
     if (this.quizFinished) {
-      this.timeElapsed = this.elapsedTime.toString(); // Convertir el tiempo total a cadena si el quiz ha terminado
+      this.timeElapsed = this.elapsedTime.toString();
     } else {
       const currentTime = Date.now();
       const timeDifference = currentTime - this.startTime;
@@ -134,8 +135,8 @@ export class PruebasComponent implements OnInit {
         );
         this.shuffleQuestions(filteredQuestions);
 
-        // Tomar las primeras preguntas según la cantidad seleccionada por el usuario y la dificultad
-        let questionCount = 10; // Cantidad por defecto para la dificultad regular
+        // Toma las primeras preguntas según la cantidad seleccionada por el usuario y la dificultad
+        let questionCount = 10;
 
         if (this.selectedDifficulty === 'facil') {
           questionCount = 5;
@@ -166,14 +167,14 @@ export class PruebasComponent implements OnInit {
   onOptionClick(optionIndex: number) {
     if (!this.answered) {
       this.currentQuestion.userAnswer = optionIndex;
-      this.checkButtonDisabled = false; // Habilitar el botón de comprobar respuesta
+      this.checkButtonDisabled = false;
     }
   }
 
 
   checkAnswer() {
-    if (!this.answerChecked) { // Agregar esta condición
-      this.answerChecked = true; // Marcar la respuesta como comprobada
+    if (!this.answerChecked) {
+      this.answerChecked = true;
       this.answered = true;
 
 
@@ -214,7 +215,7 @@ export class PruebasComponent implements OnInit {
 
 
   loadNextQuestion() {
-    this.showResult = false;  // Ocultar el resultado de la pregunta anterior
+    this.showResult = false;
     this.showNextQuestionButton = false;  // Ocultar el botón de siguiente pregunta
     this.answered = false;  // Reiniciar el estado de respuesta
     this.checkButtonDisabled = true;
@@ -224,13 +225,13 @@ export class PruebasComponent implements OnInit {
     if (this.currentQuestionIndex < this.totalQuestions) {
       this.currentQuestion = this.questions[this.currentQuestionIndex];
     } else {
-      // Quiz finished
+
       this.currentQuestion = { questionText: 'Prueba Terminada', options: [], correctOption: -1, tema: '' };
       this.quizFinished = true;
 
       // Calcular tiempo transcurrido en segundos
       this.endTime = Date.now();
-      this.elapsedTime = Math.floor((this.endTime - this.startTime) / 1000); // En segundos
+      this.elapsedTime = Math.floor((this.endTime - this.startTime) / 1000);
 
       this.sendSessionHistory();
     }
@@ -245,7 +246,7 @@ export class PruebasComponent implements OnInit {
     const userId = this.appComponent.getUserID();
     const themeProgress = [];
 
-    // Recorre el objeto themeAnswers y crea objetos para themeProgress
+
     for (const theme in this.themeAnswers) {
       if (this.themeAnswers.hasOwnProperty(theme)) {
         themeProgress.push({
@@ -285,8 +286,8 @@ export class PruebasComponent implements OnInit {
         userId: userId,
         sessionHistory: this.completedSessions,
         timeProgress: this.completedtimeProgress,
-        achievements: [], // Puedes llenar esta parte según tus necesidades
-        themeProgress: themeProgress, // Puedes llenar esta parte según tus necesidades
+        achievements: [],
+        themeProgress: themeProgress,
       };
 
       this.estadisticasService.guardarSesionHistorial(userId, sessionData).subscribe({
@@ -330,5 +331,10 @@ export class PruebasComponent implements OnInit {
   cancelQuiz() {
   this.resetQuiz(); // Restablecer las propiedades del cuestionario
   this.showIntro = true; // Mostrar la pantalla de introducción
+}
+
+viewStatistics() {
+  // Redirige a la ruta /perfil/estadisticas
+  this.router.navigate(['/perfil/estadisticas']);
 }
 }

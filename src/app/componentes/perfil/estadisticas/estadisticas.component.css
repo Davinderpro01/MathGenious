@@ -64,11 +64,16 @@
 
 /* Estilos para los títulos de los temas */
 .card-content h3 {
-  color: #000000; /* Cambio de color a rojo para resaltar el título de los temas */
-  font-size: 30px;
-  font-family:Arial, Helvetica, sans-serif;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  font-size: 32px; /* Tamaño de fuente grande */
+  color: #ffffff; /* Color de fuente oscuro */
+  background-color: #246abf; /* Fondo azul */
+  padding: 20px 0; /* Espaciado interno superior e inferior amplio */
+  text-align: center; /* Texto centrado */
+  border-bottom: 2px solid #0056b3; /* Línea inferior azul más oscuro */
+  text-transform: uppercase; /* Texto en mayúsculas */
+  font-weight: bold; /* Texto en negritas */
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Sombra suave */
+  margin-bottom: 20px; /* Espaciado inferior */
 }
 
 /* Estilos para las gráficas */
@@ -134,4 +139,24 @@ input[type="text"]:focus {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   outline: none;
 }
+
+.pdf-button {
+  background-color: #b60101;
+  color: #fff;
+  padding: 15px 30px; /* Aumentamos el padding para hacerlo más grande */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: block;
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 30px; /* Aumentamos el tamaño de la fuente para hacerlo más grande */
+
+  /* Estilo al pasar el mouse */
+  &:hover {
+    background-color: #0056b3;
+  }
+}
+
 
